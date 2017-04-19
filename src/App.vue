@@ -3,29 +3,52 @@
     <v-header>
     </v-header>
     <div class="tab">   <!--导航-->
-      <div class="tab-item">商品</div>
-      <div class="tab-item">评价</div>
-      <div class="tab-item">商家</div>
-      I am tab!
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评论</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
     </div>
-    <div class="content">
-      I am content!
-    </div>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+
   </div>
+
 </template>
 
 <script>
 
   import header from './components/header/header.vue'
 
-export default {
-  name: 'app',
-  components:{
-     'v-header':header
-  }
-}
-</script>
 
-<style>
+  export default {
+    name: 'app',
+    components: {
+      'v-header': header,
+      /*
+       'v-goods':goods,
+       'v-ratings':ratings,
+       'v-sellers':sellers
+       */
+    }
+  }
+</script>
+<style lang="stylus" rel="stylesheet/stylus">
+  #app
+    .tab
+      display: flex
+      width: 100%
+      height: 40px
+      .tab-item
+        flex: 1
+        text-align: center
+        font-size: rgb(240, 20, 20)
+        line-height: 14px
+
 
 </style>

@@ -1,10 +1,9 @@
 <template>
-  <div class="header">我是header</div>
+  <p>I am goods!</p>
 </template>
 
 <script type="text/ecmascript-6">
   export default{
-
   }
 </script>
 
