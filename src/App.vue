@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header>
+    <v-header :seller="seller">
     </v-header>
     <div class="tab">   <!--导航-->
       <div class="tab-item">
@@ -22,36 +22,30 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  const ERR_OK =0
   import header from './components/header/header.vue'
   //import {urlParse} from 'common/js/util.js'
 
   export default {
-    name: 'app',/*
+    name: 'app',
     data(){
         return{
             seller:{
-                id:(()=>{
-                    var queryParam = urlParse()
-                    return queryParam.id
-                })()
             }
         }
     },
-
     created() {
-      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
-        response = response.body;
-        console.log(this.seller.id)
+      this.$http.get('/api/seller' ).then((response) => {
+        response = response.body
         if (response.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, response.data);
+          this.seller = response.data
+          console.log(this.seller)
         }
       });
     },
-    */
+
     components: {
       'v-header': header,
-
     }
   }
 </script>
