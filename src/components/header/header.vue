@@ -35,13 +35,32 @@
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
           <div class="star-wrapper">
+
+            <star :size="48" :score="seller.score"></star>
           </div>
-          <div class="title"></div>
+          <div class="title">   <!-- flex布局-->
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li class="support-item" v-for="(item,index) in seller.supports">
+              <span class="icon" :class="classMap[item.type]"></span>
+              <span class="text" >{{item.description}}</span>
+            </li>
+          </ul>
+          <div class="title">   <!-- flex布局-->
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+          <div class="bulletin">
+            <p class="content">{{seller.bulletin}}</p>
+          </div>
         </div>
-
-
       </div>
-      <div class="detail-close">
+      <div class="detail-close" @click="hideDetail">
+
         <i class="icon-close"></i>
       </div>
     </div>
@@ -50,7 +69,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+import star from '../star/star.vue'
 
   export default {
     props: {
@@ -74,7 +93,9 @@
     created() {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
     },
-    components: {}
+    components: {
+    	star:star
+    }
   };
 </script>
 
@@ -106,7 +127,6 @@
             width: 30px
             height: 18px
             background-image: url(brand@2x.png)
-            //bg-image('brand')
             background-size: 30px 18px
             background-repeat: no-repeat
           .name
@@ -143,7 +163,6 @@
             font-size: 10px
             font-weight 200
             color:rgb(255,255,255)
-
       .support-count
         position:absolute
         right:12px
@@ -163,7 +182,6 @@
           padding-left:2px
           line-height:24px
           font-size:10px
-
     .bulletin-wrapper
       position:relative
       height:28px
@@ -182,7 +200,6 @@
         background-size:22px,12px
         background-repeat no-repeat
       .bulletin-text
-
         margin-left:4px
         line-height:28px
         font-weight 200
@@ -193,7 +210,6 @@
         font-size: 10px
         right: 12px
         top: 8px
-
     .background
       position: absolute
       top: 0
@@ -202,6 +218,82 @@
       height: 100%
       z-index: -1
       filter: blur(10px)
+    .detail
+      position:fixed   //相对浏览器
+      z-index :1
+      top:0
+      left:0
+      width: 100%
+      height:100%
+      overflow:auto
+      background:rgba(7,17,27,0.8)
+      .detail-wrapper
+        min-height:100%   //一个块元素的最小高度 如果再写 块元素就不会再自动变小 而保持此最小高度
+        width: 100%
+      .clearfix
+        display:inline-block
+        &:after
+          display:block
+          content:'.'
+          height:0
+          line-height:0
+          clear:both
+          visibility:hidden
+        .detail-main
+          margin-top:64px
+          padding-bottom:64px
+          .name
+            line-height: 16px
+            text-align:center
+            font-size:16px
+            font-weight:700
+          .star-wrapper
+            text-align:center
+            margin-top:16px
+          .title
+            display:flex
+            width:80%
+            margin: 28px auto 24px auto
+            .line
+              flex:1
+              position: relative
+              top:-6px
+              border-bottom:1px solid rgba(255,255,255,0.2)
+            .text
+              padding:0 12px
+              //line-height:14px
+              font-size: 14px
+              font-weight:700
+          .supports
+            width:80%
+            //margin-bottom: 28px
+            margin:0 auto
+            .support-item
+              margin-bottom: 12px
+              font-size: 0px
+              &:last-child
+                margin-bottom: 0px
+              .icon
+                display:inline-block
+                width: 16px
+                height: 16px
+                vertical-align:top
+                margin-right: 6px
+                background-repeat:no-repeat
+                background-size: 16px 16px
+                &.decrease
+                  background-image:url('decrease_1@2x.png')
+                &.discount
+                  background-image:url('discount_1@2x.png')
+                &.guarantee
+                  background-image:url('guarantee_2@2x.png')
+                &.invoice
+                  background-image:url('invoice_2@2x.png')
+                &.special
+                  background-image:url('special_2@2x.png')
+              .text
+                line-height: 16px
+                font-size: 12px
 
     .detail
       position:fixed   //相对浏览器
@@ -232,6 +324,13 @@
             text-align:center
             font-size:16px
             font-weight:700
+          .bulletin
+            width:80%
+            margin:0 auto
+            .content
+              padding:0 12px
+              line-height: 24px
+              font-size: 12px
       .detail-close
         position:relative
         width: 32px
@@ -240,6 +339,5 @@
         margin: -64px auto 0px auto
         //clear:both
         font-size:32px
-
 
 </style>

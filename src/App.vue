@@ -22,20 +22,20 @@
 </template>
 
 <script type="text/ecmascript-6">
-  const ERR_OK =0
+  const ERR_OK = 0
   import header from './components/header/header.vue'
+
   //import {urlParse} from 'common/js/util.js'
 
   export default {
     name: 'app',
     data(){
-        return{
-            seller:{
-            }
-        }
+      return {
+        seller: {}
+      }
     },
     created() {
-      this.$http.get('/api/seller' ).then((response) => {
+      this.$http.get('/api/seller').then((response) => {
         response = response.body
         if (response.errno === ERR_OK) {
           this.seller = response.data
@@ -55,17 +55,17 @@
       display: flex
       width: 100%
       height: 40px
-      line-height:40px
+      line-height: 40px
       .tab-item
         flex: 1
         text-align: center
         color: rgb(240, 20, 20)
         font-size: 14px
         a
-          display:block
-          text-decoration:none
-          font-size:14px
-          color:rgb(77,85,93)
+          display: block
+          text-decoration: none
+          font-size: 14px
+          color: rgb(77, 85, 93)
           &.active
-            color:rgb(240,20,20)
+            color: rgb(240, 20, 20)
 </style>
