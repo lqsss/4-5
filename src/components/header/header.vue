@@ -34,7 +34,12 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
+          <div class="star-wrapper">
+          </div>
+          <div class="title"></div>
         </div>
+
+
       </div>
       <div class="detail-close">
         <i class="icon-close"></i>
@@ -236,12 +241,5 @@
         //clear:both
         font-size:32px
 
-/*
-    class="a b"
 
-    stylus
-    .a
-      //a的style内容;
-    .b
-*/
 </style>
