@@ -61,7 +61,7 @@
         text-align: center
         color: rgb(240, 20, 20)
         font-size: 14px
-        & >a
+        a
           display:block
           text-decoration:none
           font-size:14px
