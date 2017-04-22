@@ -9,14 +9,13 @@
       <div class="tab-item">
         <router-link to="/ratings">评论</router-link>
       </div>
-      <div class="b tab-item">
+      <div class="tab-item">
         <router-link to="/seller">商家</router-link>
       </div>
     </div>
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-
   </div>
 
 </template>
@@ -35,13 +34,13 @@
       }
     },
     created() {
-      this.$http.get('/api/seller').then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.seller = response.data
-          console.log(this.seller)
-        }
-      });
+        this.$http.get('/api/seller').then((response) => {
+          response = response.body
+          if (response.errno === ERR_OK) {
+            this.seller = response.data
+            console.log(this.seller)
+          }
+        });
     },
 
     components: {

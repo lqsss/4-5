@@ -5,9 +5,6 @@
 </div>
 </template>
 
-
-
-
 <script type="text/ecmascript-6">
   const LENGTH = 5;
   const CLS_ON = 'on';
