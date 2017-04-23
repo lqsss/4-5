@@ -2,7 +2,8 @@
   <div class="goods">
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}">
+        <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
+        @click="selectMenu(index,$event)">
           <span class="text">
             <span class="icon" v-show="item.type>0" :class="classMap[item.type]"></span>
             {{item.name}}
@@ -34,11 +35,13 @@
         </li>
       </ul>
     </div>
+    <shopcart></shopcart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+  import shopcart from '../shopcart/shopcart'
   const ERR_OK=0
   export default{
     props: {
@@ -72,16 +75,25 @@
         response = response.body
         if (response.errno === ERR_OK) {
           this.goods = response.data
-          console.log( this.$refs.foodsWrapper.getElementsByClassName('food-list-hook'))
-          this.$nextTick(()=>{
+          //console.log( this.$refs.foodsWrapper.getElementsByClassName('food-list-hook'))
+          this.$nextTick(()=>{                 //dom异步更新
             this._initScroll()
             this._calculateHeight()
-            console.log(this.listHeight)
+            //console.log(this.listHeight)
           })
         }
       })
     },
     methods:{
+      selectMenu(index,event){
+          if(!event._constructed){            //浏览器原生没有这个属性
+              return
+          }
+        let foodList =this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el =foodList[index]
+        this.foodsScroll.scrollToElement(el,300)
+        //console.log(index)    //我们自定义
+      },
       _initScroll() {
         this.meunScroll = new BScroll(this.$refs.menuWrapper, {
           click: true
@@ -106,6 +118,9 @@
             this.listHeight.push(height)
         }
       }
+    },
+    components:{
+        shopcart
     }
   }
 </script>
