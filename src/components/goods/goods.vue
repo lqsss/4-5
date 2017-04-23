@@ -35,7 +35,7 @@
         </li>
       </ul>
     </div>
-    <shopcart></shopcart>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -221,6 +221,7 @@
               text-decoration:line-through
               font-size: 10px
               color:rgb(147,153,159)
+
 
 
 </style>
