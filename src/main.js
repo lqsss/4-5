@@ -17,6 +17,7 @@ Vue.use(VueResource)
 Vue.config.productionTip = false
 
 
+
 const routers = new VueRouter({
   routes:[
     { path: '/',
@@ -27,7 +28,6 @@ const routers = new VueRouter({
   ],
   linkActiveClass: 'active'
 })
-
 //routers.push('/goods')
 /* eslint-disable no-new */
 new Vue({
