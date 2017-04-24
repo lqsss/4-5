@@ -1,12 +1,13 @@
 <template>
   <div class="cartcontrol">
-    <div class="cart-decrease" v-show="food.count>0"></div>
+    <div class="cart-decrease icon-add_circle" v-show="food.count>0" @click="decreaseCart"></div>
     <div class="cart-count" v-show="food.count>0">{{food.count}}</div>
-    <div class="cart-add"></div>
+    <div class="cart-add icon-add_circle " @click="addCart"></div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Vue from 'vue'
 export default{
   props:{
       food:{
@@ -14,19 +15,45 @@ export default{
       }
   },
   created(){
-      console.log(this.food)
-  }
+      //console.log(this.food)
+  },
+  methods:{
+    addCart(event){
+    	if(!event._constructed){
+    		return
+      }
+      if(!this.food.count){
+    		Vue.set(this.food,'count',1)
+      }else{
+      	this.food.count++
+      }
+    },
+    decreaseCart(event){
+      if(!event._constructed){
+        return
+      }
+      if(this.food.count){
+        this.food.count--
+      }
+    },
+  },
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   .cartcontrol
-    font-size:0
     .cart-decrease
       display:inline-block
-      padding:6px
+      padding: 6px
+      line-height: 24px
+      font-size: 24px
+      color: rgb(0, 160, 220)
     .cart-count
       display:inline-block
-    .cart-count
+    .cart-add
       display:inline-block
+      padding: 6px
+      line-height: 24px
+      font-size: 24px
+      color: rgb(0, 160, 220)
 </style>

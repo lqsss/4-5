@@ -3,7 +3,7 @@
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
         <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
-        @click="selectMenu(index,$event)">
+            @click="selectMenu(index,$event)">
           <span class="text">
             <span class="icon" v-show="item.type>0" :class="classMap[item.type]"></span>
             {{item.name}}
@@ -38,7 +38,7 @@
         </li>
       </ul>
     </div>
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -46,7 +46,7 @@
   import BScroll from 'better-scroll'
   import shopcart from '../shopcart/shopcart'
   import cartcontrol from '../cartcontrol/cartcontrol'
-  const ERR_OK=0
+  const ERR_OK = 0
   export default{
     props: {
       seller: {
@@ -55,23 +55,35 @@
     },
     data(){
       return {
-          goods:[],
-          listHeight:[],
-          scrollY:0
+        goods: [],
+        listHeight: [],
+        scrollY: 0,
+        foods:[]
       }
     },
-    computed:{
-        currentIndex(){
-          for(let i=0;i<this.listHeight.length;i++)
-          {
-            let height1 = this.listHeight[i]
-            let height2 = this.listHeight[i+1]
-            if(!height2||(this.scrollY>=height1&&this.scrollY<height2)){
-                return i
-            }
+    computed: {
+      currentIndex(){
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i]
+          let height2 = this.listHeight[i + 1]
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i
           }
-          return 0
+        }
+        return 0
       },
+      selectFoods(){
+      	var foods=[]
+        this.goods.forEach((good)=>{
+          good.foods.forEach((food)=>{
+          	if(food.count){
+          		foods.push(food)
+            }
+          })
+        })
+        console.log(foods)
+        return foods
+      }
     },
     created(){
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
@@ -80,7 +92,7 @@
         if (response.errno === ERR_OK) {
           this.goods = response.data
           //console.log( this.$refs.foodsWrapper.getElementsByClassName('food-list-hook'))
-          this.$nextTick(()=>{                 //dom异步更新
+          this.$nextTick(() => {                 //dom异步更新
             this._initScroll()
             this._calculateHeight()
             //console.log(this.listHeight)
@@ -88,14 +100,14 @@
         }
       })
     },
-    methods:{
-      selectMenu(index,event){
-          if(!event._constructed){            //浏览器原生没有这个属性
-              return
-          }
-        let foodList =this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
-        let el =foodList[index]
-        this.foodsScroll.scrollToElement(el,300)
+    methods: {
+      selectMenu(index, event){
+        if (!event._constructed) {            //浏览器原生没有这个属性
+          return
+        }
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let el = foodList[index]
+        this.foodsScroll.scrollToElement(el, 300)
         //console.log(index)    //我们自定义
       },
       _initScroll() {
@@ -111,19 +123,18 @@
         })
       },
       _calculateHeight(){
-        let foodList =this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+        let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
         let height = 0
         this.listHeight.push(height)
         //console.log(foodList.length)
-        for(let i=0;i<foodList.length;i++)
-        {
-            let item =foodList[i]
-            height+=item.clientHeight
-            this.listHeight.push(height)
+        for (let i = 0; i < foodList.length; i++) {
+          let item = foodList[i]
+          height += item.clientHeight
+          this.listHeight.push(height)
         }
       }
     },
-    components:{
+    components: {
       shopcart,
       cartcontrol
     }
@@ -143,10 +154,10 @@
       width: 80px
       background: #f3f5f7
       .menu-item
-        display:table
+        display: table
         height: 54px
         width: 56px
-        padding:0 12px
+        padding: 0 12px
         line-height: 14px
         &.current
           position: relative
@@ -155,13 +166,13 @@
           background: #fff
           font-weight: 700
         .icon
-          display:inline-block
+          display: inline-block
           vertical-align: top
-          width:12px
-          height:12px
+          width: 12px
+          height: 12px
           margin-right: 2px
-          background-size:12px, 12px
-          background-repeat:no-repeat
+          background-size: 12px, 12px
+          background-repeat: no-repeat
           &.decrease
             background-image: url(decrease_3@2x.png)
           &.discount
@@ -173,42 +184,42 @@
           &.guarantee
             background-image: url(guarantee_3@2x.png)
         .text
-          display:table-cell
+          display: table-cell
           width: 56px
-          vertical-align:middle
+          vertical-align: middle
           font-size: 12px
-          border-bottom:1px rgba(7,17,27,0.1) solid
+          border-bottom: 1px rgba(7, 17, 27, 0.1) solid
     .food-wrapper
       flex: 1
       .title
         padding-left: 14px
         height: 26px
         line-height: 26px
-        border-left:2px solid #d9dde1
-        font-size:12px
-        color:rgb(147,153,159)
-        background:#f3f5f7
+        border-left: 2px solid #d9dde1
+        font-size: 12px
+        color: rgb(147, 153, 159)
+        background: #f3f5f7
       .food-item
-        display:flex
-        margin:18px
-        padding:18px
-        border-bottom :2px solid rgba(7,17,27,0.1)
+        display: flex
+        margin: 18px
+        padding: 18px
+        border-bottom: 2px solid rgba(7, 17, 27, 0.1)
         &:last-child
-          margin-bottom:0
+          margin-bottom: 0
         .icon
-          flex:0 0 57px
+          flex: 0 0 57px
           margin-right: 10px
         .content
-          flex:1
+          flex: 1
           .name
-            margin:2px 0px 8px 0px
-            height:14px
-            line-height :14px
-            color:rgb(7,17,27)
-          .desc,.extra
+            margin: 2px 0px 8px 0px
+            height: 14px
+            line-height: 14px
+            color: rgb(7, 17, 27)
+          .desc, .extra
             line-height: 10px
             font-size: 10px
-            color:rgb(147,153,159)
+            color: rgb(147, 153, 159)
           .desc
             line-height: 12px
             margin-bottom: 8px
@@ -216,18 +227,19 @@
             .count
               margin-right: 12px
           .price
-            font-weight:700
+            font-weight: 700
             line-height: 24px
             .now
               margin-right: 8px
               font-size: 14px
-              color:rgb(240,20,20)
+              color: rgb(240, 20, 20)
             .old
-              text-decoration:line-through
+              text-decoration: line-through
               font-size: 10px
-              color:rgb(147,153,159)
-
-
-
+              color: rgb(147, 153, 159)
+          .cartcontrol-wrapper
+            //position:absolute
+            bottom: 12px
+            right: 0
 </style>
 

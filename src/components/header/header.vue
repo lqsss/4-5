@@ -35,7 +35,6 @@
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
           <div class="star-wrapper">
-
             <star :size="48" :score="seller.score"></star>
           </div>
           <div class="title">   <!-- flex布局-->
@@ -60,7 +59,6 @@
         </div>
       </div>
       <div class="detail-close" @click="hideDetail">
-
         <i class="icon-close"></i>
       </div>
     </div>
