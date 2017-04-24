@@ -211,6 +211,7 @@
           margin-right: 10px
         .content
           flex: 1
+          position:relative
           .name
             margin: 2px 0px 8px 0px
             height: 14px
@@ -238,7 +239,7 @@
               font-size: 10px
               color: rgb(147, 153, 159)
           .cartcontrol-wrapper
-            //position:absolute
+            position:absolute
             bottom: 12px
             right: 0
 </style>
