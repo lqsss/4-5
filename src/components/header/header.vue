@@ -295,7 +295,7 @@ import star from '../star/star.vue'
 
     .detail
       position:fixed   //相对浏览器
-      z-index :1
+      z-index :1000
       top:0
       left:0
       width: 100%
@@ -335,7 +335,7 @@ import star from '../star/star.vue'
         height: 32px
         //margin: 0px auto 64px auto
         margin: -64px auto 0px auto
-        //clear:both
+        clear:both
         font-size:32px
 
 </style>

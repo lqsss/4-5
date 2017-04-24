@@ -200,6 +200,7 @@
         color: rgb(147, 153, 159)
         background: #f3f5f7
       .food-item
+        position relative
         display: flex
         margin: 18px
         padding: 18px
@@ -211,7 +212,6 @@
           margin-right: 10px
         .content
           flex: 1
-          position:relative
           .name
             margin: 2px 0px 8px 0px
             height: 14px
