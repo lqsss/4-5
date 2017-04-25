@@ -13,23 +13,26 @@
           <span class="sell-count">月售{{food.sellCount}}份</span><span class="rating">好评率{{food.rating}}%</span>
         </div>
         <div class="price">
-          <span class="now"></span><span class="old"></span>
+          <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
         </div>
-        <div class="buy">
-          <div>
-          </div>
+        <div class="buy" v-show="!food.count ||food.count===0" @click="addFirst">
+          加入购物车
         </div>
       </div>
     </div>
     <div class="info">
-      <h1 class="title"></h1>
-      <p class="text"></p>
+      <h1 class="title">商品介绍</h1>
+      <p class="text">{{food.info}}</p>
     </div>
-    <div class="rating"></div>
+    <div class="rating">
+      <h1 class="title">商品评价</h1>
+
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Vue from 'vue'
   export default{
     props: {
       food: {
@@ -47,6 +50,13 @@
       },
       hide(){
         this.showFlag = false
+      },
+      addFirst(event){
+        /*if(!event._constructed)
+        	return
+        	*/
+        Vue.set(this.food,'count',1)
+        this.$emit('add',event.target)
       }
     }
 
@@ -92,6 +102,7 @@
         line-height: 14px
       .detail
         margin-top: 8px
+        margin-bottom: 18px
         //font-size:0
         font-weight:700
         color:rgb(147,153,159)
@@ -104,12 +115,45 @@
         .now
           font-size: 14px
           font-weight:700
+          margin-right: 8px
           color:rgb(240,20,20)
         .old
-
-
-
-
-
-
+          text-decoration:line-through
+          line-height: 24px
+          font-size:10px
+          color:rgb(147,153,159)
+      .buy
+        position: absolute
+        right: 18px
+        bottom: 18px
+        z-index: 10
+        height: 24px
+        line-height: 24px
+        padding: 0 12px
+        box-sizing: border-box
+        border-radius: 12px
+        font-size: 10px
+        color: #fff
+        background: rgb(0, 160, 220)
+    .info
+      position:relative
+      padding: 18px
+      .title
+        line-height: 14px
+        font-size: 14px
+        margin-bottom: 6px
+        color:rgb(7,17,27)
+      .text
+        padding:0 8px
+        line-height: 24px
+        font-size: 12px
+        font-weight:200
+        color:rgb(77,85,93)
+    .rating
+      padding-top: 18px
+      .title
+        line-height: 14px
+        font-size: 14px
+        margin-left: 18px
+        color:rgb(7,17,27)
 </style>
