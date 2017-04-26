@@ -23,17 +23,29 @@
             加入购物车
           </div>
         </transition>
-        </div> <!--没count这个属性 或者count为0-->
+      </div> <!--没count这个属性 或者count为0-->
       <div class="info" v-show="food.info">
         <h1 class="title">商品介绍</h1>
         <p class="text">{{food.info}}</p>
       </div>
       <div class="rating">
         <h1 class="title">商品评价</h1>
-        <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent" :desc="desc"></ratingselect>
+        <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent"
+                      :desc="desc" :ratings="food.ratings"></ratingselect>
         <div class="rating-wrapper">
-          <ul class="rating-item">
+          <ul v-show="food.ratings&&food.ratings.length">
+            <li class="rating-item" v-for="rating in food.ratings" v-show="needShow(rating.rateType,rating.text)">
+              <div class="user">
+                <span class="name">{{rating.username}}</span>
+                <img class="avatar" :src="rating.avatar" width="12px" height="12px">
+              </div>
+              <!--<div class="time">{{rating.rateTime | formatDate}}</div> -->
+              <p class="text">
+                <span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>{{rating.text}}
+               </p>
+            </li>
           </ul>
+          <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
         </div>
       </div>
     </div>
@@ -46,6 +58,7 @@
   import BScroll from 'better-scroll'
   import cartcontrol from '../cartcontrol/cartcontrol'
   import ratingselect from '../ratingselect/ratingselect'
+  import {formatDate} from   '../../common/js/date.js'
   const POSITIVE = 0
   const NEGATIVE = 1
   const ALL = 2
@@ -58,20 +71,20 @@
     data(){
       return {
         showFlag: false,
-        selectType:ALL,
-        onlyContent:true,
-        desc:{
-            all:'全部' ,
-            positive:'推荐',
-            negative:'吐槽'
+        selectType: ALL,
+        onlyContent: true,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
         },
       }
     },
     methods: {
       show(){
         this.showFlag = true
-        this.selectType=ALL
-        this.onlyContent=true
+        this.selectType = ALL
+        this.onlyContent = true
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.food, {
@@ -86,23 +99,38 @@
         this.showFlag = false
       },
       addFirst(event){
-        if(!event._constructed)
-         return
+        if (!event._constructed)
+          return
         Vue.set(this.food, 'count', 1)
         this.$emit('add', event.target)
       },
       selectRating(type){
-        this.selectType=type
-        this.$nextTick(()=>{
-        	this.scroll.refresh()
+        this.selectType = type
+        this.$nextTick(() => {
+          this.scroll.refresh()
         })
       },
       toggleContent(){
-      	this.onlyContent=!onlyContent
+        this.onlyContent = !onlyContent
         this.$nextTick(() => {
           this.scroll.refresh();
         });
-      }
+      },
+      needShow(rateType, text){
+        if (this.onlyContent && !text)
+          return false
+        if (this.selectType === ALL) {
+          return true
+        } else {
+        	return rateType === this.selectType
+        }
+      },
+      filters: {
+        formatDate(time) {
+          let date = new Date(time);
+          return formatDate(date, 'yyyy-MM-dd hh:mm');
+        }
+      },
     },
     components: {
       cartcontrol,
@@ -208,5 +236,45 @@
         font-size: 14px
         margin-left: 18px
         color: rgb(7, 17, 27)
+      .rating-wrapper
+        padding:0 18px
+        .rating-item
+          position:relative
+          padding:16px 0
+          border-bottom:1px solid rgba(7,17,27,0.1)
+          .user
+            position:absolute
+            right: 0px
+            top: 16px
+            .name
+              display:line-block
+              vertical-align: top
+              margin-right:6px
+              font-size: 10px
+              color:rgb(147,153,159)
+              line-height:12px
+            .avatar
+              border-radius:50%
+          .time
+            font-size: 10px
+            color:rgb(147,153,159)
+            line-height:12px
+          .text
+            margin:6px 0 0 0
+            font-size:12px
+            color: rgb(7, 17, 27)
+            .icon-thumb_up, .icon-thumb_down
+              display:line-block
+              margin-right: 4px
+              line-height: 24px
+            .icon-thumb_up
+              color:rgb(0,160,220)
+            .icon-thumb_down
+              color:rgb(147,153,159)
 
+
+        .no-rating
+          padding: 16px 0
+          font-size: 12px
+          color: rgb(147, 153, 159)
 </style>

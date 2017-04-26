@@ -45,6 +45,7 @@
       select(type,event){
       	if(!event._constructed)
       		return
+        //console.log(this.ratings[0].rateType)
         this.$emit('select',type)
       },
       toggleContent(){
