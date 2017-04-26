@@ -1,16 +1,46 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type">
-      <span class="block positive"></span>
-      <span class="block positive"></span>
-      <span class="block positive"></span>
+      <span>{{desc.all}}</span>
+      <span>{{desc.positive}}</span>
+      <span>{{desc.negative}}</span>
+    </div>
+    <div class="switch">
+      <span class="icon-check_circle"></span>
+      <span class="text">只看有内容的评价</span>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-	export default{
-
+  const POSITIVE = 0
+  const NEGATIVE = 1
+  const ALL = 2
+  export default{
+    props: {
+      ratings: {
+        type: Array,
+        default(){     //数组。对象 都要返回一个函数
+          return []
+        }
+      },
+      selectType: {
+        type: Number,
+        dafault: ALL
+      },
+      onlyContent:{
+        type:Boolean,
+        default:false
+      },
+      desc:{
+        type:Object,
+        default:{
+          all:'全部',
+          positive:'满意',
+          negative:'不满意'
+        }
+      }
+    },
   }
 </script>
 
