@@ -24,10 +24,12 @@
           </div>
         </transition>
       </div> <!--没count这个属性 或者count为0-->
+      <split></split>
       <div class="info" v-show="food.info">
         <h1 class="title">商品介绍</h1>
         <p class="text">{{food.info}}</p>
       </div>
+      <split></split>
       <div class="rating">
         <h1 class="title">商品评价</h1>
         <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent"
@@ -59,6 +61,7 @@
   import cartcontrol from '../cartcontrol/cartcontrol'
   import ratingselect from '../ratingselect/ratingselect'
   import {formatDate} from   '../../common/js/date.js'
+  import split from '../split/split'
   const POSITIVE = 0
   const NEGATIVE = 1
   const ALL = 2
@@ -134,7 +137,8 @@
     },
     components: {
       cartcontrol,
-      ratingselect
+      ratingselect,
+      split
     }
 
   }
