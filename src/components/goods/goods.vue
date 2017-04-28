@@ -216,7 +216,7 @@
         padding: 18px
         border-bottom: 2px solid rgba(7, 17, 27, 0.1)
         &:last-child
-          margin-bottom: 0
+          margin-bottom: none
         .icon
           flex: 0 0 57px
           margin-right: 10px
