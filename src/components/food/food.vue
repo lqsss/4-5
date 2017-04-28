@@ -32,8 +32,9 @@
       <split></split>
       <div class="rating">
         <h1 class="title">商品评价</h1>
-        <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent"
-                      :desc="desc" :ratings="food.ratings"></ratingselect>
+        <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType"
+                      :onlyContent="onlyContent" :desc="desc"
+                      :ratings="food.ratings"></ratingselect>
         <div class="rating-wrapper">
           <ul v-show="food.ratings&&food.ratings.length">
             <li class="rating-item" v-for="rating in food.ratings" v-show="needShow(rating.rateType,rating.text)">
@@ -60,7 +61,7 @@
   import BScroll from 'better-scroll'
   import cartcontrol from '../cartcontrol/cartcontrol'
   import ratingselect from '../ratingselect/ratingselect'
-  import {formatDate} from   '../../common/js/date.js'
+  //import {formatDate} from   '../../common/js/date.js'
   import split from '../split/split'
   const POSITIVE = 0
   const NEGATIVE = 1
@@ -71,7 +72,7 @@
         type: Object
       },
     },
-    data(){
+    data() {
       return {
         showFlag: false,
         selectType: ALL,
@@ -80,14 +81,14 @@
           all: '全部',
           positive: '推荐',
           negative: '吐槽'
-        },
+        }
       }
     },
     methods: {
-      show(){
-        this.showFlag = true
-        this.selectType = ALL
-        this.onlyContent = true
+      show() {
+        this.showFlag = true;
+        this.selectType = ALL;
+        this.onlyContent = true;
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$refs.food, {
@@ -113,27 +114,28 @@
           this.scroll.refresh()
         })
       },
-      toggleContent(){
-        this.onlyContent = !onlyContent
+      needShow(type, text) {
+        if (this.onlyContent && !text) {
+          return false;
+        }
+        if (this.selectType === ALL) {
+          return true;
+        } else {
+          return type === this.selectType;
+        }
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent;
         this.$nextTick(() => {
           this.scroll.refresh();
         });
       },
-      needShow(rateType, text){
-        if (this.onlyContent && !text)
-          return false
-        if (this.selectType === ALL) {
-          return true
-        } else {
-        	return rateType === this.selectType
-        }
-      },
-      filters: {
-        formatDate(time) {
-          let date = new Date(time);
-          return formatDate(date, 'yyyy-MM-dd hh:mm');
-        }
-      },
+    },
+    filters: {
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
     },
     components: {
       cartcontrol,
@@ -275,8 +277,6 @@
               color:rgb(0,160,220)
             .icon-thumb_down
               color:rgb(147,153,159)
-
-
         .no-rating
           padding: 16px 0
           font-size: 12px

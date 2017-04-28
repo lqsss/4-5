@@ -5,8 +5,8 @@
       <span @click="select(0,$event)" class="block positive" :class="{'active':selectType===0}">{{desc.positive}}<span class="count">{{ratings.length}}</span></span>
       <span @click="select(1,$event)" class="block negative" :class="{'active':selectType===1}">{{desc.negative}}<span class="count">{{ratings.length}}</span></span>
     </div>
-    <div class="switch">
-      <span @click="toggleContent" class="icon-check_circle" :class="{'on':onlyContent}"></span>
+    <div @click="toggleContent" class="switch" :class="{'on':onlyContent}">
+      <span class="icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
@@ -28,9 +28,9 @@
         type: Number,
         dafault: ALL
       },
-      onlyContent:{
-        type:Boolean,
-        default:false
+      onlyContent: {
+        type: Boolean,
+        default: false
       },
       desc:{
         type:Object,
@@ -48,12 +48,13 @@
         //console.log(this.ratings[0].rateType)
         this.$emit('select',type)
       },
-      toggleContent(){
-        if(!event._constructed)
-          return
-        this.$emit('toggle')
-      },
-    },
+      toggleContent(event) {
+        if (!event._constructed) {
+          return;
+        }
+        this.$emit('toggle');
+      }
+    }
   }
 </script>
 

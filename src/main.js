@@ -24,7 +24,7 @@ const routers = new VueRouter({
       redirect: '/goods'},
     {path:'/goods',component:goods},
     {path:'/seller',component:seller},
-    {path:'/rating',component:ratings},
+    {path:'/ratings',component:ratings},
   ],
   linkActiveClass: 'active'
 })
