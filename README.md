@@ -24,6 +24,12 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 初识vue(一)(https://segmentfault.com/n/1330000009336640)　
 
-准备工作(一)https://segmentfault.com/n/1330000009338961
+准备工作(二)https://segmentfault.com/n/1330000009338961
 
 header组件开发(三)https://segmentfault.com/n/1330000009342862
+
+商品组件开发(四)https://segmentfault.com/n/1330000009348801
+
+star组件(五)https://segmentfault.com/n/1330000009366765
+
+商家收藏涉及知识点(六)https://segmentfault.com/n/1330000009253894
